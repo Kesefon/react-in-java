@@ -1,0 +1,3 @@
+[submodule "redux-essentials-counter-example"]
+	path = redux-essentials-counter-example
+	url = https://github.com/reduxjs/redux-essentials-counter-example
