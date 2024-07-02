@@ -1,5 +1,12 @@
 package org.example;
 
+import me.friwi.jcefmaven.CefAppBuilder;
+import me.friwi.jcefmaven.CefInitializationException;
+import me.friwi.jcefmaven.UnsupportedPlatformException;
+import org.cef.CefApp;
+import org.cef.CefClient;
+import org.cef.browser.CefBrowser;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -18,8 +25,14 @@ public class Window {
 
         JComponent panel2 = null;
         try {
-            panel2 = new JLabel(new ImageIcon(ImageIO.read(new File ("src/main/java/org/example/content.png"))));
-        } catch (IOException e) {
+            CefAppBuilder builder = new CefAppBuilder();
+            builder.getCefSettings().windowless_rendering_enabled = false;
+            CefApp cefApp = builder.build();
+            CefClient client = cefApp.createClient();
+            CefBrowser browser = client.createBrowser("localhost:3000", false, false);
+            Component browserUI = browser.getUIComponent();
+            panel2 = (JComponent) browserUI;
+        } catch (Exception e) {
             panel2 = new JTextArea("*insert web content here*");
         }
         tabbedPane.addTab("Tab 2", null, panel2, "");

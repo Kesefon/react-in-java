@@ -10,6 +10,7 @@ repositories {
 }
 
 dependencies {
+    implementation("me.friwi:jcefmaven:122.1.10")
     testImplementation(platform("org.junit:junit-bom:5.10.0"))
     testImplementation("org.junit.jupiter:junit-jupiter")
 }
