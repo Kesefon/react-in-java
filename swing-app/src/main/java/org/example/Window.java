@@ -1,12 +1,12 @@
 package org.example;
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import java.awt.*;
-import java.io.File;
-import java.io.IOException;
+import com.teamdev.jxbrowser.browser.Browser;
+import com.teamdev.jxbrowser.engine.Engine;
+import com.teamdev.jxbrowser.view.swing.BrowserView;
 
-import static java.lang.System.exit;
+import javax.swing.*;
+
+import static com.teamdev.jxbrowser.engine.RenderingMode.HARDWARE_ACCELERATED;
 
 public class Window {
     public Window() {
@@ -18,8 +18,11 @@ public class Window {
 
         JComponent panel2 = null;
         try {
-            panel2 = new JLabel(new ImageIcon(ImageIO.read(new File ("src/main/java/org/example/content.png"))));
-        } catch (IOException e) {
+            Engine engine = Engine.newInstance(HARDWARE_ACCELERATED);
+            Browser browser = engine.newBrowser();
+            panel2 = BrowserView.newInstance(browser);
+            browser.navigation().loadUrl("localhost:3000");
+        } catch (Exception e) {
             panel2 = new JTextArea("*insert web content here*");
         }
         tabbedPane.addTab("Tab 2", null, panel2, "");

@@ -1,5 +1,6 @@
 plugins {
     id("java")
+    id("com.teamdev.jxbrowser") version "1.1.0"
 }
 
 group = "org.example"
@@ -10,8 +11,12 @@ repositories {
 }
 
 dependencies {
-    testImplementation(platform("org.junit:junit-bom:5.10.0"))
-    testImplementation("org.junit.jupiter:junit-jupiter")
+    implementation(jxbrowser.crossPlatform)
+    implementation(jxbrowser.swing)
+}
+
+jxbrowser {
+    version = "7.39.2"
 }
 
 tasks.test {
