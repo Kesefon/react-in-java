@@ -1,12 +1,7 @@
 package org.example;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
-import java.awt.*;
-import java.io.File;
 import java.io.IOException;
-
-import static java.lang.System.exit;
 
 public class Window {
     public Window() {
@@ -18,7 +13,9 @@ public class Window {
 
         JComponent panel2 = null;
         try {
-            panel2 = new JLabel(new ImageIcon(ImageIO.read(new File ("src/main/java/org/example/content.png"))));
+            JEditorPane ePane = new JEditorPane();
+            ePane.setPage("http://localhost:3000");
+            panel2 = ePane;
         } catch (IOException e) {
             panel2 = new JTextArea("*insert web content here*");
         }
