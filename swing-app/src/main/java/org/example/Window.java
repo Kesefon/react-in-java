@@ -1,12 +1,13 @@
 package org.example;
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import java.awt.*;
-import java.io.File;
-import java.io.IOException;
+import javafx.application.Platform;
+import javafx.embed.swing.JFXPanel;
+import javafx.scene.Scene;
+import javafx.scene.layout.VBox;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 
-import static java.lang.System.exit;
+import javax.swing.*;
 
 public class Window {
     public Window() {
@@ -18,13 +19,35 @@ public class Window {
 
         JComponent panel2 = null;
         try {
-            panel2 = new JLabel(new ImageIcon(ImageIO.read(new File ("src/main/java/org/example/content.png"))));
-        } catch (IOException e) {
+            final JFXPanel fxPanel = new JFXPanel();
+            panel2 = new JPanel();
+            panel2.add(fxPanel);
+
+            Platform.runLater(() -> initFX(fxPanel));
+        } catch (Exception e) {
             panel2 = new JTextArea("*insert web content here*");
         }
         tabbedPane.addTab("Tab 2", null, panel2, "");
         frame.add(tabbedPane);
         frame.pack();
         frame.setVisible(true);
+    }
+
+    private static void initFX(JFXPanel fxPanel) {
+        Scene scene = createScene();
+        fxPanel.setScene(scene);
+    }
+
+    private static Scene createScene() {
+        VBox root = new VBox();
+        Scene scene = new Scene(root);
+
+        WebView webView = new WebView();
+        final WebEngine webEngine = webView.getEngine();
+        webEngine.load("http://localhost:3000");
+
+        root.getChildren().add(webView);
+
+        return (scene);
     }
 }
